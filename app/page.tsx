@@ -5,10 +5,10 @@ import Image from "next/image";
 
 const interests = [
   "🖥️ Homelabbing & self-hosted infrastructure",
-  "📡 Networking and smart home automation",
-  "🎯 Outdoor target shooting",
+  "🕹️ PC gaming",
+  "📘 Reading books",
   "🔧 Building and tinkering with servers",
-  "📷 Security cameras & NVR systems",
+  "🚗 Driving",
 ];
 
 export default function Home() {
@@ -43,12 +43,7 @@ export default function Home() {
             className="rounded-xl object-cover"
           />
           <p className="text-zinc-600 leading-relaxed">
-            Hi, I&apos;m Bryan Viveros — a tech enthusiast and student based near
-            Monroe, WA. When I&apos;m not studying, you can find me deep in my
-            homelab, setting up self-hosted services, tinkering with network
-            infrastructure, or heading out for some outdoor target shooting. I
-            love understanding how things work under the hood and building
-            systems that just <em>work</em>.
+            Hi, I&apos;m Bryan Viveros - a tech enthusiast and student at Univerisity of Washington.
           </p>
         </div>
       </section>
