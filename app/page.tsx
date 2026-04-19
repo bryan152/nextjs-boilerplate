@@ -1,65 +1,80 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 
+const interests = [
+  "🖥️ Homelabbing & self-hosted infrastructure",
+  "📡 Networking and smart home automation",
+  "🎯 Outdoor target shooting",
+  "🔧 Building and tinkering with servers",
+  "📷 Security cameras & NVR systems",
+];
+
 export default function Home() {
+  const [items, setItems] = useState(interests);
+  const [ascending, setAscending] = useState(true);
+
+  const handleSort = () => {
+    const sorted = [...items].sort((a, b) =>
+      ascending ? b.localeCompare(a) : a.localeCompare(b)
+    );
+    setItems(sorted);
+    setAscending(!ascending);
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            Bryan Viveros & Momo.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className="min-h-screen bg-zinc-50 text-zinc-800 px-6 py-12 max-w-2xl mx-auto">
+      {/* 1. Welcome message */}
+      <h1 className="text-4xl font-bold mb-2">Welcome! 👋</h1>
+      <p className="text-zinc-500 mb-10 text-lg">
+        Glad you stopped by — take a look around!
+      </p>
+
+      {/* 2. Who you are */}
+      <section className="mb-10">
+        <h2 className="text-2xl font-semibold mb-3">About Me</h2>
+        <div className="flex flex-col sm:flex-row gap-6 items-start">
+          <Image
+            src="/profile.jpg"   {/* drop a photo named profile.jpg into /public */}
+            alt="Bryan Viveros"
+            width={160}
+            height={160}
+            className="rounded-xl object-cover"
+          />
+          <p className="text-zinc-600 leading-relaxed">
+            Hi, I&apos;m Bryan Viveros — a tech enthusiast and student based near
+            Monroe, WA. When I&apos;m not studying, you can find me deep in my
+            homelab, setting up self-hosted services, tinkering with network
+            infrastructure, or heading out for some outdoor target shooting. I
+            love understanding how things work under the hood and building
+            systems that just <em>work</em>.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      </section>
+
+      {/* 3 & 4. List of interests + sort button */}
+      <section>
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-2xl font-semibold">Things I&apos;m Into</h2>
+          <button
+            onClick={handleSort}
+            className="text-sm bg-zinc-800 text-white px-4 py-2 rounded-lg hover:bg-zinc-600 transition"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            Sort {ascending ? "Z → A" : "A → Z"}
+          </button>
         </div>
-      </main>
-    </div>
+        <ul className="space-y-2">
+          {items.map((item) => (
+            <li
+              key={item}
+              className="bg-white border border-zinc-200 rounded-lg px-4 py-3 text-zinc-700"
+            >
+              {item}
+            </li>
+          ))}
+        </ul>
+      </section>
+    </main>
   );
 }
