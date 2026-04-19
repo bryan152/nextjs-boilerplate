@@ -36,7 +36,7 @@ export default function Home() {
         <h2 className="text-2xl font-semibold mb-3">About Me</h2>
         <div className="flex flex-col sm:flex-row gap-6 items-start">
           <Image
-            src="/profile.jpg"            
+            src="/ProfilePic.jpeg"            
             alt="Bryan Viveros"
             width={160}
             height={160}
