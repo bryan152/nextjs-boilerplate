@@ -2,7 +2,11 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1a1a1a;
+  --color-heading: #1e3a5f;
+  --color-accent: #1d5fa8;
+  --color-highlight: #c85200;
+  --color-bg-alt: #f0f4fa;
 }
 
 @theme inline {
@@ -23,4 +27,8 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+h1, h2, h3 {
+  color: var(--color-heading);
 }
