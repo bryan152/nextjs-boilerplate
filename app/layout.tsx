@@ -47,6 +47,9 @@ export default function RootLayout({
               <Link href="/things-to-read" className="nav-link">
                 Things to Read
               </Link>
+              <Link href="/demo-day" className="nav-link">
+              Demo Day!
+              </Link>
             </div>
           </nav>
         </header>
