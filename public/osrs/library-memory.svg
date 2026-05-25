@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="650" viewBox="0 0 900 650">
+  <defs>
+    <linearGradient id="sky" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#2b3d66"/>
+      <stop offset="100%" stop-color="#7a4f2a"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="0" x2="1">
+      <stop offset="0%" stop-color="#9be7ff"/>
+      <stop offset="100%" stop-color="#f4d35e"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="650" fill="url(#sky)"/>
+  <circle cx="740" cy="110" r="70" fill="#f4d35e" opacity=".9"/>
+  <rect x="90" y="410" width="720" height="115" rx="18" fill="#3a2412"/>
+  <rect x="290" y="205" width="320" height="210" rx="20" fill="#1c1b18"/>
+  <rect x="315" y="230" width="270" height="150" rx="12" fill="url(#screen)"/>
+  <rect x="390" y="415" width="120" height="45" fill="#1c1b18"/>
+  <rect x="340" y="460" width="220" height="28" rx="12" fill="#1c1b18"/>
+  <circle cx="450" cy="327" r="34" fill="#3d7c44"/>
+  <path d="M420 350 L480 350 L500 375 L400 375 Z" fill="#8b5a2b"/>
+  <path d="M130 410 C180 320 250 300 300 410" fill="#2f6b3f" opacity=".95"/>
+  <path d="M640 410 C690 315 760 305 810 410" fill="#2f6b3f" opacity=".95"/>
+  <text x="450" y="585" text-anchor="middle" font-family="Arial" font-size="34" font-weight="700" fill="#fff7df">Library Computer Era</text>
+</svg>

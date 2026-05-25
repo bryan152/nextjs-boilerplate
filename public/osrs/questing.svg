@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="430" viewBox="0 0 700 430">
+  <rect width="700" height="430" fill="#395f7a"/>
+  <circle cx="90" cy="80" r="48" fill="#f4d35e"/>
+  <path d="M0 300 C130 240 250 260 360 230 C500 190 610 220 700 180 L700 430 L0 430 Z" fill="#6f8c45"/>
+  <rect x="430" y="150" width="145" height="165" fill="#b7a184"/>
+  <rect x="455" y="110" width="95" height="55" fill="#8a7355"/>
+  <path d="M430 150 L502 95 L575 150 Z" fill="#704c2a"/>
+  <rect x="482" y="245" width="42" height="70" fill="#3a2412"/>
+  <path d="M210 315 L245 230 L280 315 Z" fill="#3a2412"/>
+  <circle cx="245" cy="215" r="23" fill="#d8b45d"/>
+  <path d="M250 180 L335 120" stroke="#d8b45d" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="350" cy="110" r="22" fill="#ffd36c"/>
+  <text x="350" y="390" text-anchor="middle" font-family="Arial" font-size="32" font-weight="700" fill="#fff7df">Questing</text>
+</svg>

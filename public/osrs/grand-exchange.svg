@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="430" viewBox="0 0 700 430">
+  <rect width="700" height="430" fill="#5f4630"/>
+  <path d="M0 300 C120 250 230 275 350 245 C480 215 590 235 700 195 L700 430 L0 430 Z" fill="#b58b4a"/>
+  <rect x="110" y="175" width="160" height="135" rx="12" fill="#3a2412"/>
+  <rect x="135" y="140" width="110" height="45" rx="8" fill="#d8b45d"/>
+  <rect x="430" y="160" width="170" height="150" rx="12" fill="#3a2412"/>
+  <rect x="460" y="125" width="110" height="45" rx="8" fill="#d8b45d"/>
+  <circle cx="345" cy="220" r="70" fill="#d8b45d"/>
+  <circle cx="345" cy="220" r="48" fill="#f4efe3"/>
+  <text x="345" y="237" text-anchor="middle" font-family="Arial" font-size="48" font-weight="700" fill="#8a5a00">GP</text>
+  <circle cx="210" cy="330" r="24" fill="#2f3e66"/>
+  <circle cx="485" cy="330" r="24" fill="#2f3e66"/>
+  <text x="350" y="390" text-anchor="middle" font-family="Arial" font-size="32" font-weight="700" fill="#fff7df">Grand Exchange</text>
+</svg>

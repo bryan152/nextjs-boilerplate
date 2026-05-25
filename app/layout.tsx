@@ -39,7 +39,7 @@ export default function RootLayout({
               Bryan Viveros
             </Link>
 
-            <div className="flex flex-wrap justify-center gap-3">
+            <div className="flex flex-wrap justify-center gap-3 items-center">
               <Link href="/" className="nav-link">
                 Home
               </Link>
@@ -47,8 +47,21 @@ export default function RootLayout({
               <Link href="/things-to-read" className="nav-link">
                 Things to Read
               </Link>
+
+              <div className="nav-dropdown">
+                <button className="nav-link nav-dropdown-button" type="button">
+                  Things I Enjoy <span aria-hidden="true">▾</span>
+                </button>
+
+                <div className="nav-dropdown-menu" aria-label="Things I Enjoy submenu">
+                  <Link href="/osrs" className="nav-dropdown-item">
+                    Old School RuneScape
+                  </Link>
+                </div>
+              </div>
+
               <Link href="/demo-day" className="nav-link">
-              Demo Day!
+                Demo Day!
               </Link>
             </div>
           </nav>

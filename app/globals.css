@@ -524,3 +524,1368 @@ select:focus-visible {
   gap: 0.7rem;
   margin-top: 1rem;
 }
+
+/* =========================================================
+   Navbar dropdown
+   ========================================================= */
+
+.nav-dropdown {
+  position: relative;
+  display: inline-flex;
+}
+
+.nav-dropdown-button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.55rem);
+  min-width: 230px;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  background: white;
+  border: 1px solid var(--border);
+  box-shadow: 0 18px 36px rgba(17, 24, 39, 0.18);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease,
+    visibility 0.18s ease;
+}
+
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown:focus-within .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.nav-dropdown-item {
+  display: block;
+  color: var(--navy);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 700;
+  padding: 0.75rem 0.9rem;
+  border-radius: 0.75rem;
+}
+
+.nav-dropdown-item:hover {
+  background: var(--soft-blue);
+}
+
+/* =========================================================
+   OSRS page: login-screen inspired layout
+   ========================================================= */
+
+.osrs-login-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at center top, rgba(60, 82, 45, 0.35), transparent 26rem),
+    #050604;
+  color: #d8d1b0;
+  padding: 1.25rem;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.osrs-shell {
+  position: relative;
+  overflow: hidden;
+  max-width: 1180px;
+  min-height: calc(100vh - 2.5rem);
+  margin: 0 auto;
+  border: 3px solid #51442a;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.45)),
+    repeating-linear-gradient(
+      45deg,
+      #1c1b17 0,
+      #1c1b17 16px,
+      #171612 16px,
+      #171612 32px
+    );
+  box-shadow:
+    0 0 0 4px #15120a,
+    0 24px 80px rgba(0, 0, 0, 0.75);
+}
+
+.osrs-shell::before,
+.osrs-shell::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  z-index: 0;
+  width: 34px;
+  height: 100%;
+  background:
+    radial-gradient(circle, #4f6b2e 0 32%, transparent 35%) 0 0 / 34px 52px,
+    linear-gradient(90deg, #1c2a14, #35491f, #1c2a14);
+  opacity: 0.85;
+}
+
+.osrs-shell::before {
+  left: 0;
+}
+
+.osrs-shell::after {
+  right: 0;
+}
+
+/* ---------- OSRS top/header area ---------- */
+
+.osrs-top-bar,
+.osrs-login-hero,
+.osrs-layout {
+  position: relative;
+  z-index: 1;
+}
+
+.osrs-top-bar {
+  min-height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 0.35rem 3.5rem;
+  color: #8ee35a;
+  font-size: 0.78rem;
+}
+
+.osrs-small-link {
+  color: #f2d36b;
+  text-decoration: none;
+}
+
+.osrs-small-link:hover {
+  text-decoration: underline;
+}
+
+.osrs-login-hero {
+  text-align: center;
+  padding: 1.5rem 3.5rem 2rem;
+}
+
+.osrs-character-row {
+  display: flex;
+  justify-content: center;
+  gap: clamp(0.5rem, 2vw, 1.2rem);
+  margin-bottom: 0.5rem;
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  opacity: 0.92;
+  filter: drop-shadow(0 8px 4px rgba(0, 0, 0, 0.65));
+}
+
+.osrs-logo-box {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0.25rem 1rem 0.7rem;
+  text-shadow: 2px 3px 0 #000;
+}
+
+.osrs-rune-row {
+  margin: 0;
+  color: white;
+  letter-spacing: 0.45em;
+  font-weight: 900;
+  font-size: clamp(1.1rem, 4vw, 2rem);
+}
+
+.osrs-logo-box h1 {
+  margin: 0;
+  color: #f7efe0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.3rem, 8vw, 5.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+}
+
+.osrs-ribbon {
+  display: inline-block;
+  margin-top: 0.35rem;
+  padding: 0.28rem 1rem;
+  background: #8b1d14;
+  color: #fff2cf;
+  border: 2px solid #d7af57;
+  border-radius: 999px;
+  font-weight: 900;
+  text-transform: uppercase;
+  transform: rotate(-2deg);
+  box-shadow: 0 4px 0 #2b0b07;
+}
+
+.osrs-player-count {
+  margin: 1rem auto 1.2rem;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.osrs-player-count strong {
+  color: #a8ff66;
+}
+
+/* ---------- OSRS buttons ---------- */
+
+.osrs-start-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.osrs-big-button {
+  width: 170px;
+  min-height: 96px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+  text-decoration: none;
+  font-weight: 900;
+  border: 3px ridge #9b8a5f;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.26)),
+    #3b3a34;
+  box-shadow:
+    inset 0 0 0 1px #d2c097,
+    0 8px 14px rgba(0, 0, 0, 0.55);
+}
+
+.osrs-big-button span {
+  display: block;
+  margin-top: 0.25rem;
+  color: #f2d36b;
+  font-size: 0.75rem;
+}
+
+.osrs-big-button:hover {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.14), rgba(0, 0, 0, 0.2)),
+    #4b493f;
+  transform: translateY(-1px);
+}
+
+/* ---------- OSRS page layout ---------- */
+
+.osrs-layout {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 1.1rem;
+  padding: 0 3.5rem 3rem;
+}
+
+.osrs-sidebar {
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+}
+
+.osrs-main-panel {
+  display: grid;
+  gap: 1rem;
+}
+
+/* ---------- OSRS panels/cards ---------- */
+
+.osrs-menu-panel,
+.osrs-news-box,
+.osrs-stone-card,
+.osrs-stat-card,
+.osrs-video-card,
+.osrs-design-panel {
+  background: #070707;
+  border: 2px solid #4e4327;
+  box-shadow:
+    inset 0 0 0 1px #1a160c,
+    0 8px 18px rgba(0, 0, 0, 0.55);
+}
+
+.osrs-menu-panel {
+  padding: 0.65rem;
+}
+
+.osrs-menu-panel h2 {
+  margin: 0 0 0.45rem;
+  padding-bottom: 0.35rem;
+  color: white;
+  font-size: 0.88rem;
+  text-align: center;
+  border-bottom: 1px solid #3c3320;
+}
+
+.osrs-menu-panel ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.osrs-menu-panel li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.35rem;
+  color: #f0d872;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.osrs-green-dot {
+  color: #6dff35;
+}
+
+.osrs-news-box,
+.osrs-design-panel {
+  padding: clamp(1rem, 3vw, 1.5rem);
+}
+
+.osrs-panel-kicker {
+  margin: 0 0 0.5rem;
+  color: #9cff58;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.76rem;
+  font-weight: 900;
+}
+
+.osrs-news-box h2,
+.osrs-stat-section h2,
+.osrs-video-section h2,
+.osrs-design-panel h2 {
+  margin: 0 0 0.75rem;
+  color: #f2d36b;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  text-shadow: 2px 2px 0 #000;
+}
+
+.osrs-news-box p,
+.osrs-stone-card p,
+.osrs-stat-card p,
+.osrs-video-section p,
+.osrs-video-card p,
+.osrs-design-panel p {
+  margin: 0;
+  color: #d8d1b0;
+  line-height: 1.65;
+}
+
+.osrs-news-box p + p,
+.osrs-design-panel p + p {
+  margin-top: 0.75rem;
+}
+
+/* ---------- OSRS reason/stat sections ---------- */
+
+.osrs-reason-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.osrs-stone-card,
+.osrs-stat-card {
+  padding: 1rem;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.25)),
+    #151511;
+}
+
+.osrs-stone-card h3,
+.osrs-stat-card h3,
+.osrs-video-card h3 {
+  margin: 0 0 0.5rem;
+  color: #a8ff66;
+  font-size: 1rem;
+}
+
+.osrs-stat-section,
+.osrs-video-section {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.osrs-stat-grid,
+.osrs-video-grid {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.osrs-stat-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.osrs-stat-card span {
+  display: inline-block;
+  margin-bottom: 0.45rem;
+  color: #f2d36b;
+  font-weight: 900;
+  font-size: 1.4rem;
+}
+
+/* ---------- OSRS video section ---------- */
+
+.osrs-video-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.osrs-video-card {
+  overflow: hidden;
+}
+
+.osrs-video-card h3 {
+  padding: 0.8rem;
+  margin: 0;
+}
+
+.osrs-video-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-bottom: 2px solid #4e4327;
+}
+
+.osrs-video-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* ---------- OSRS design explanation ---------- */
+
+.osrs-design-panel {
+  border-color: #776338;
+}
+
+/* ---------- Responsive OSRS styles ---------- */
+
+@media (max-width: 900px) {
+  .osrs-login-page {
+    padding: 0.5rem;
+  }
+
+  .osrs-shell::before,
+  .osrs-shell::after {
+    width: 18px;
+    background-size: 18px 36px;
+  }
+
+  .osrs-top-bar,
+  .osrs-login-hero,
+  .osrs-layout {
+    padding-left: 1.8rem;
+    padding-right: 1.8rem;
+  }
+
+  .osrs-layout,
+  .osrs-reason-list,
+  .osrs-stat-grid,
+  .osrs-video-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .osrs-start-buttons {
+    gap: 0.65rem;
+  }
+
+  .osrs-big-button {
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .nav-dropdown-menu {
+    left: 50%;
+    right: auto;
+    transform: translate(-50%, -6px);
+  }
+
+  .nav-dropdown:hover .nav-dropdown-menu,
+  .nav-dropdown:focus-within .nav-dropdown-menu {
+    transform: translate(-50%, 0);
+  }
+}
+
+/* =========================================================
+   Navbar dropdown
+   ========================================================= */
+
+.nav-dropdown {
+  position: relative;
+  display: inline-flex;
+}
+
+.nav-dropdown-button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.55rem);
+  min-width: 230px;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  background: white;
+  border: 1px solid var(--border);
+  box-shadow: 0 18px 36px rgba(17, 24, 39, 0.18);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease,
+    visibility 0.18s ease;
+}
+
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown:focus-within .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.nav-dropdown-item {
+  display: block;
+  color: var(--navy);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 700;
+  padding: 0.75rem 0.9rem;
+  border-radius: 0.75rem;
+}
+
+.nav-dropdown-item:hover {
+  background: var(--soft-blue);
+}
+
+/* =========================================================
+   OSRS page: login-screen inspired layout
+   ========================================================= */
+
+.osrs-login-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at center top, rgba(60, 82, 45, 0.35), transparent 26rem),
+    #050604;
+  color: #d8d1b0;
+  padding: 1.25rem;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.osrs-shell {
+  position: relative;
+  overflow: hidden;
+  max-width: 1180px;
+  min-height: calc(100vh - 2.5rem);
+  margin: 0 auto;
+  border: 3px solid #51442a;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.45)),
+    repeating-linear-gradient(
+      45deg,
+      #1c1b17 0,
+      #1c1b17 16px,
+      #171612 16px,
+      #171612 32px
+    );
+  box-shadow:
+    0 0 0 4px #15120a,
+    0 24px 80px rgba(0, 0, 0, 0.75);
+}
+
+.osrs-shell::before,
+.osrs-shell::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  z-index: 0;
+  width: 34px;
+  height: 100%;
+  background:
+    radial-gradient(circle, #4f6b2e 0 32%, transparent 35%) 0 0 / 34px 52px,
+    linear-gradient(90deg, #1c2a14, #35491f, #1c2a14);
+  opacity: 0.85;
+}
+
+.osrs-shell::before {
+  left: 0;
+}
+
+.osrs-shell::after {
+  right: 0;
+}
+
+.osrs-top-bar,
+.osrs-login-hero,
+.osrs-layout {
+  position: relative;
+  z-index: 1;
+}
+
+.osrs-top-bar {
+  min-height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 0.35rem 3.5rem;
+  color: #8ee35a;
+  font-size: 0.78rem;
+}
+
+.osrs-small-link {
+  color: #f2d36b;
+  text-decoration: none;
+}
+
+.osrs-small-link:hover {
+  text-decoration: underline;
+}
+
+.osrs-login-hero {
+  text-align: center;
+  padding: 1.5rem 3.5rem 2rem;
+}
+
+.osrs-character-row {
+  display: flex;
+  justify-content: center;
+  gap: clamp(0.5rem, 2vw, 1.2rem);
+  margin-bottom: 0.5rem;
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  opacity: 0.92;
+  filter: drop-shadow(0 8px 4px rgba(0, 0, 0, 0.65));
+}
+
+.osrs-logo-box {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0.25rem 1rem 0.7rem;
+  text-shadow: 2px 3px 0 #000;
+}
+
+.osrs-rune-row {
+  margin: 0;
+  color: white;
+  letter-spacing: 0.45em;
+  font-weight: 900;
+  font-size: clamp(1.1rem, 4vw, 2rem);
+}
+
+.osrs-logo-box h1 {
+  margin: 0;
+  color: #f7efe0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.3rem, 8vw, 5.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+}
+
+.osrs-ribbon {
+  display: inline-block;
+  margin-top: 0.35rem;
+  padding: 0.28rem 1rem;
+  background: #8b1d14;
+  color: #fff2cf;
+  border: 2px solid #d7af57;
+  border-radius: 999px;
+  font-weight: 900;
+  text-transform: uppercase;
+  transform: rotate(-2deg);
+  box-shadow: 0 4px 0 #2b0b07;
+}
+
+.osrs-player-count {
+  margin: 1rem auto 1.2rem;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.osrs-player-count strong {
+  color: #a8ff66;
+}
+
+.osrs-start-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.osrs-big-button {
+  width: 170px;
+  min-height: 96px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+  text-decoration: none;
+  font-weight: 900;
+  border: 3px ridge #9b8a5f;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.26)),
+    #3b3a34;
+  box-shadow:
+    inset 0 0 0 1px #d2c097,
+    0 8px 14px rgba(0, 0, 0, 0.55);
+}
+
+.osrs-big-button span {
+  display: block;
+  margin-top: 0.25rem;
+  color: #f2d36b;
+  font-size: 0.75rem;
+}
+
+.osrs-big-button:hover {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.14), rgba(0, 0, 0, 0.2)),
+    #4b493f;
+  transform: translateY(-1px);
+}
+
+.osrs-layout {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 1.1rem;
+  padding: 0 3.5rem 3rem;
+}
+
+.osrs-sidebar {
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+}
+
+.osrs-main-panel {
+  display: grid;
+  gap: 1rem;
+}
+
+.osrs-menu-panel,
+.osrs-news-box,
+.osrs-stone-card,
+.osrs-stat-card,
+.osrs-video-card,
+.osrs-design-panel {
+  background: #070707;
+  border: 2px solid #4e4327;
+  box-shadow:
+    inset 0 0 0 1px #1a160c,
+    0 8px 18px rgba(0, 0, 0, 0.55);
+}
+
+.osrs-menu-panel {
+  padding: 0.65rem;
+}
+
+.osrs-menu-panel h2 {
+  margin: 0 0 0.45rem;
+  padding-bottom: 0.35rem;
+  color: white;
+  font-size: 0.88rem;
+  text-align: center;
+  border-bottom: 1px solid #3c3320;
+}
+
+.osrs-menu-panel ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.osrs-menu-panel li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.35rem;
+  color: #f0d872;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.osrs-green-dot {
+  color: #6dff35;
+}
+
+.osrs-news-box,
+.osrs-design-panel {
+  padding: clamp(1rem, 3vw, 1.5rem);
+}
+
+.osrs-panel-kicker {
+  margin: 0 0 0.5rem;
+  color: #9cff58;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.76rem;
+  font-weight: 900;
+}
+
+.osrs-news-box h2,
+.osrs-stat-section h2,
+.osrs-video-section h2,
+.osrs-design-panel h2 {
+  margin: 0 0 0.75rem;
+  color: #f2d36b;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  text-shadow: 2px 2px 0 #000;
+}
+
+.osrs-news-box p,
+.osrs-stone-card p,
+.osrs-stat-card p,
+.osrs-video-section p,
+.osrs-video-card p,
+.osrs-design-panel p {
+  margin: 0;
+  color: #d8d1b0;
+  line-height: 1.65;
+}
+
+.osrs-news-box p + p,
+.osrs-design-panel p + p {
+  margin-top: 0.75rem;
+}
+
+.osrs-reason-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.osrs-stone-card,
+.osrs-stat-card {
+  padding: 1rem;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.25)),
+    #151511;
+}
+
+.osrs-stone-card h3,
+.osrs-stat-card h3,
+.osrs-video-card h3 {
+  margin: 0 0 0.5rem;
+  color: #a8ff66;
+  font-size: 1rem;
+}
+
+.osrs-stat-section,
+.osrs-video-section {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.osrs-stat-grid,
+.osrs-video-grid {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.osrs-stat-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.osrs-stat-card span {
+  display: inline-block;
+  margin-bottom: 0.45rem;
+  color: #f2d36b;
+  font-weight: 900;
+  font-size: 1.4rem;
+}
+
+.osrs-video-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.osrs-video-card {
+  overflow: hidden;
+}
+
+.osrs-video-card h3 {
+  padding: 0.8rem;
+  margin: 0;
+}
+
+.osrs-video-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-bottom: 2px solid #4e4327;
+}
+
+.osrs-video-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.osrs-design-panel {
+  border-color: #776338;
+}
+
+@media (max-width: 900px) {
+  .osrs-login-page {
+    padding: 0.5rem;
+  }
+
+  .osrs-shell::before,
+  .osrs-shell::after {
+    width: 18px;
+    background-size: 18px 36px;
+  }
+
+  .osrs-top-bar,
+  .osrs-login-hero,
+  .osrs-layout {
+    padding-left: 1.8rem;
+    padding-right: 1.8rem;
+  }
+
+  .osrs-layout,
+  .osrs-reason-list,
+  .osrs-stat-grid,
+  .osrs-video-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .osrs-start-buttons {
+    gap: 0.65rem;
+  }
+
+  .osrs-big-button {
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .nav-dropdown-menu {
+    left: 50%;
+    right: auto;
+    transform: translate(-50%, -6px);
+  }
+
+  .nav-dropdown:hover .nav-dropdown-menu,
+  .nav-dropdown:focus-within .nav-dropdown-menu {
+    transform: translate(-50%, 0);
+  }
+}
+
+/* ---------- OSRS inspiration + call-to-action additions ---------- */
+
+.osrs-inspiration-panel,
+.osrs-try-panel {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  background: #070707;
+  border: 2px solid #4e4327;
+  box-shadow:
+    inset 0 0 0 1px #1a160c,
+    0 8px 18px rgba(0, 0, 0, 0.55);
+}
+
+.osrs-inspiration-panel {
+  grid-template-columns: 1fr 1.1fr;
+  align-items: center;
+}
+
+.osrs-inspiration-panel h2,
+.osrs-try-panel h2 {
+  margin: 0 0 0.75rem;
+  color: #f2d36b;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  text-shadow: 2px 2px 0 #000;
+}
+
+.osrs-inspiration-panel p,
+.osrs-try-panel p {
+  margin: 0;
+  color: #d8d1b0;
+  line-height: 1.65;
+}
+
+.osrs-inspiration-image {
+  margin: 0;
+  border: 2px solid #4e4327;
+  background: #000;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.55);
+}
+
+.osrs-inspiration-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.osrs-inspiration-image figcaption {
+  padding: 0.55rem 0.7rem;
+  color: #f0d872;
+  font-size: 0.78rem;
+  border-top: 1px solid #4e4327;
+}
+
+.osrs-site-button {
+  width: fit-content;
+  display: inline-flex;
+  margin-top: 1rem;
+  color: white;
+  text-decoration: none;
+  font-weight: 900;
+  border: 3px ridge #9b8a5f;
+  padding: 0.8rem 1rem;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.26)),
+    #3b3a34;
+  box-shadow:
+    inset 0 0 0 1px #d2c097,
+    0 8px 14px rgba(0, 0, 0, 0.55);
+}
+
+.osrs-site-button:hover {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.14), rgba(0, 0, 0, 0.2)),
+    #4b493f;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 900px) {
+  .osrs-inspiration-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .osrs-site-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* OSRS screenshot image fit fix */
+
+.osrs-screenshot-card img {
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: #000;
+}
+
+/* =========================================================
+   OSRS polish: music embed, screenshot spacing, stronger theme
+   ========================================================= */
+
+.osrs-shell {
+  background:
+    radial-gradient(circle at center 12%, rgba(68, 93, 46, 0.22), transparent 22rem),
+    linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.45)),
+    repeating-linear-gradient(
+      45deg,
+      #1c1b17 0,
+      #1c1b17 16px,
+      #171612 16px,
+      #171612 32px
+    );
+}
+
+.osrs-news-box,
+.osrs-inspiration-panel,
+.osrs-gallery-section,
+.osrs-music-panel,
+.osrs-video-section,
+.osrs-try-panel,
+.osrs-design-panel,
+.osrs-stone-card,
+.osrs-stat-card,
+.osrs-screenshot-card,
+.osrs-video-card {
+  border-color: #6a5a2f;
+  box-shadow:
+    inset 0 0 0 1px #1a160c,
+    inset 0 0 18px rgba(242, 211, 107, 0.05),
+    0 10px 22px rgba(0, 0, 0, 0.62);
+}
+
+.osrs-news-box h2,
+.osrs-inspiration-panel h2,
+.osrs-gallery-section h2,
+.osrs-music-panel h2,
+.osrs-video-section h2,
+.osrs-try-panel h2,
+.osrs-design-panel h2,
+.osrs-stat-section h2 {
+  text-shadow:
+    2px 2px 0 #000,
+    0 0 10px rgba(242, 211, 107, 0.22);
+}
+
+/* Make screenshot cards feel less cramped */
+.osrs-screenshot-grid {
+  gap: 1.35rem;
+  align-items: start;
+}
+
+.osrs-screenshot-card {
+  display: grid;
+  gap: 0;
+}
+
+.osrs-screenshot-card img {
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: #000;
+  padding: 0.35rem;
+}
+
+.osrs-screenshot-card figcaption {
+  padding: 1rem 1rem 1.15rem;
+  border-top: 2px solid #4e4327;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.2)),
+    #0b0b08;
+}
+
+.osrs-screenshot-card strong {
+  display: block;
+  margin-bottom: 0.45rem;
+  color: #f2d36b;
+  font-size: 1rem;
+}
+
+.osrs-screenshot-card span {
+  display: block;
+  color: #d8d1b0;
+  line-height: 1.65;
+}
+
+/* Music section: playlist + Sea Shanty embed */
+.osrs-music-panel {
+  grid-template-columns: 0.95fr 1.05fr;
+  align-items: start;
+}
+
+.osrs-credit-note {
+  margin-top: 0.85rem !important;
+  padding: 0.85rem;
+  border-left: 4px solid #f2d36b;
+  background: rgba(242, 211, 107, 0.08);
+  color: #cfc39a !important;
+  font-size: 0.88rem;
+}
+
+.osrs-music-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.osrs-site-button-secondary {
+  background:
+    linear-gradient(rgba(168, 255, 102, 0.1), rgba(0, 0, 0, 0.26)),
+    #1c2a14;
+  color: #d8ffb2;
+}
+
+.osrs-sea-shanty-card {
+  overflow: hidden;
+  background: #050505;
+  border: 2px solid #4e4327;
+  box-shadow:
+    inset 0 0 0 1px #1a160c,
+    0 8px 18px rgba(0, 0, 0, 0.55);
+}
+
+.osrs-sea-shanty-card p {
+  margin: 0;
+  padding: 0.9rem;
+  color: #d8d1b0;
+  line-height: 1.6;
+}
+
+.osrs-sea-shanty-card strong {
+  color: #f2d36b;
+}
+
+/* Make OSRS sections breathe more between big panels */
+.osrs-main-panel {
+  gap: 1.25rem;
+}
+
+@media (max-width: 900px) {
+  .osrs-music-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .osrs-music-actions {
+    flex-direction: column;
+  }
+}
+
+/* =========================================================
+   OSRS final polish: readability, gallery spacing, music
+   ========================================================= */
+
+/* Fix blue headings inside the OSRS page caused by global h2 styles */
+.osrs-login-page h1,
+.osrs-login-page h2,
+.osrs-login-page h3 {
+  color: #f2d36b !important;
+}
+
+.osrs-logo-box h1 {
+  color: #f7efe0 !important;
+}
+
+.osrs-panel-kicker {
+  color: #9cff58 !important;
+}
+
+.osrs-gallery-section h2,
+.osrs-music-panel h2,
+.osrs-video-section h2,
+.osrs-try-panel h2,
+.osrs-inspiration-panel h2,
+.osrs-design-panel h2,
+.osrs-stat-section h2,
+.osrs-news-box h2 {
+  color: #f2d36b !important;
+  text-shadow:
+    2px 2px 0 #000,
+    0 0 10px rgba(242, 211, 107, 0.28);
+}
+
+/* Make the screenshot gallery much easier to read */
+.osrs-screenshot-grid {
+  grid-template-columns: 1fr !important;
+  gap: 2rem !important;
+}
+
+.osrs-screenshot-card {
+  display: grid;
+  margin: 0;
+  overflow: hidden;
+  background: #050505;
+  border: 2px solid #6a5a2f;
+  box-shadow:
+    inset 0 0 0 1px #1a160c,
+    0 10px 22px rgba(0, 0, 0, 0.62);
+}
+
+.osrs-screenshot-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: #000;
+  padding: 0.45rem;
+  border-bottom: 2px solid #6a5a2f;
+}
+
+.osrs-screenshot-card figcaption {
+  display: block;
+  padding: 1.1rem 1.15rem 1.35rem;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.22)),
+    #0b0b08;
+}
+
+.osrs-screenshot-card strong {
+  display: block;
+  margin-bottom: 0.55rem;
+  color: #f2d36b;
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.osrs-screenshot-card span {
+  display: block;
+  color: #d8d1b0;
+  line-height: 1.7;
+}
+
+/* Cleaner music section */
+.osrs-music-panel {
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.osrs-credit-note {
+  margin-top: 0.85rem !important;
+  padding: 0.85rem;
+  border-left: 4px solid #f2d36b;
+  background: rgba(242, 211, 107, 0.08);
+  color: #d8d1b0 !important;
+  font-size: 0.88rem;
+}
+
+.osrs-music-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.osrs-site-button-secondary {
+  background:
+    linear-gradient(rgba(168, 255, 102, 0.1), rgba(0, 0, 0, 0.26)),
+    #1c2a14;
+  color: #d8ffb2;
+}
+
+.osrs-sea-shanty-card {
+  overflow: hidden;
+  background: #050505;
+  border: 2px solid #6a5a2f;
+  box-shadow:
+    inset 0 0 0 1px #1a160c,
+    0 8px 18px rgba(0, 0, 0, 0.55);
+}
+
+.osrs-sea-shanty-card p {
+  margin: 0;
+  padding: 1rem 1.1rem;
+  color: #d8d1b0;
+  line-height: 1.6;
+}
+
+.osrs-sea-shanty-card strong {
+  color: #f2d36b;
+}
+
+/* Slightly stronger old-school panel feel */
+.osrs-news-box,
+.osrs-inspiration-panel,
+.osrs-gallery-section,
+.osrs-music-panel,
+.osrs-video-section,
+.osrs-try-panel,
+.osrs-design-panel,
+.osrs-stone-card,
+.osrs-stat-card,
+.osrs-video-card {
+  border-color: #6a5a2f;
+  box-shadow:
+    inset 0 0 0 1px #1a160c,
+    inset 0 0 18px rgba(242, 211, 107, 0.05),
+    0 10px 22px rgba(0, 0, 0, 0.62);
+}
+
+@media (max-width: 900px) {
+  .osrs-music-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .osrs-music-actions {
+    flex-direction: column;
+  }
+}
