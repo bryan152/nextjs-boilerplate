@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
+import SiteBrand from "./components/SiteBrand";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,9 +36,7 @@ export default function RootLayout({
             aria-label="Main navigation"
             className="max-w-6xl mx-auto px-6 py-4 flex flex-col sm:flex-row gap-4 justify-between items-center"
           >
-            <Link href="/" className="font-bold text-xl tracking-tight">
-              Bryan Viveros
-            </Link>
+            <SiteBrand />
 
             <div className="flex flex-wrap justify-center gap-3 items-center">
               <Link href="/" className="nav-link">

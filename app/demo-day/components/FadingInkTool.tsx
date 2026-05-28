@@ -12,16 +12,41 @@ type InkLine = {
   time: number;
 };
 
+const mazeImages = [
+  {
+    name: "Easy Maze",
+    difficulty: "Easy",
+    src: "/annotshare/easyMaze.svg",
+    task: "Start with the easy maze. Set a fade time, then click and hold to start your timed maze attempt.",
+  },
+  {
+    name: "Medium Maze",
+    difficulty: "Medium",
+    src: "/annotshare/mediumMaze.svg",
+    task: "Now try the medium maze. Try changing the timer to see if shorter or longer fading ink helps more.",
+  },
+  {
+    name: "Hard Maze",
+    difficulty: "Hard",
+    src: "/annotshare/hardMaze.svg",
+    task: "Try the hard maze last. This one tests whether fading ink still helps when the task gets harder.",
+  },
+];
+
 export default function FadingInkTool() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const animationRef = useRef<number | null>(null);
+  const attemptStartRef = useRef<number | null>(null);
 
   const [inkOn, setInkOn] = useState(false);
-  const [fadeTime, setFadeTime] = useState(4);
+  const [fadeTime, setFadeTime] = useState(30);
+  const [mazeIndex, setMazeIndex] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(30);
+  const [attemptActive, setAttemptActive] = useState(false);
   const [status, setStatus] = useState("Fading ink is off.");
 
-  // I am using refs here because I do not want the page to re-render
-  // every single time the mouse moves.
+  const currentMaze = mazeImages[mazeIndex];
+
   const savedLines = useRef<InkLine[]>([]);
   const currentLine = useRef<InkLine | null>(null);
   const isDrawing = useRef(false);
@@ -31,9 +56,10 @@ export default function FadingInkTool() {
 
     window.addEventListener("resize", resizeCanvas);
 
-    // This loop keeps redrawing the canvas so older ink can fade.
     function animationLoop() {
+      updateAttemptTimer();
       redrawCanvas();
+
       animationRef.current = requestAnimationFrame(animationLoop);
     }
 
@@ -46,7 +72,13 @@ export default function FadingInkTool() {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [fadeTime]);
+  }, [fadeTime, attemptActive, timeLeft]);
+
+  useEffect(() => {
+    if (!attemptActive) {
+      setTimeLeft(fadeTime);
+    }
+  }, [fadeTime, attemptActive]);
 
   function resizeCanvas() {
     const canvas = canvasRef.current;
@@ -81,10 +113,24 @@ export default function FadingInkTool() {
     };
   }
 
+  function startNewAttempt() {
+    savedLines.current = [];
+    currentLine.current = null;
+    isDrawing.current = false;
+
+    attemptStartRef.current = Date.now();
+
+    setAttemptActive(true);
+    setTimeLeft(fadeTime);
+    setStatus(`Timer started. You have ${formatTime(fadeTime)}.`);
+  }
+
   function startDrawing(event: React.PointerEvent<HTMLCanvasElement>) {
     if (!inkOn) {
       return;
     }
+
+    startNewAttempt();
 
     event.currentTarget.setPointerCapture(event.pointerId);
 
@@ -94,12 +140,14 @@ export default function FadingInkTool() {
       points: [getMousePosition(event)],
       time: Date.now(),
     };
-
-    setStatus("Drawing... the ink should fade after a few seconds.");
   }
 
   function draw(event: React.PointerEvent<HTMLCanvasElement>) {
     if (!inkOn || !isDrawing.current || !currentLine.current) {
+      return;
+    }
+
+    if (attemptStartRef.current === null) {
       return;
     }
 
@@ -115,7 +163,33 @@ export default function FadingInkTool() {
     savedLines.current.push(currentLine.current);
     currentLine.current = null;
 
-    setStatus("Ink added. It will fade away soon.");
+    setStatus(
+      "Attempt still running. Click and hold again to restart with a fresh timer."
+    );
+  }
+
+  function updateAttemptTimer() {
+    if (!attemptActive || attemptStartRef.current === null) {
+      return;
+    }
+
+    const elapsedSeconds = (Date.now() - attemptStartRef.current) / 1000;
+    const remainingSeconds = Math.max(0, fadeTime - elapsedSeconds);
+
+    setTimeLeft(remainingSeconds);
+
+    if (remainingSeconds <= 0) {
+      attemptStartRef.current = null;
+      isDrawing.current = false;
+      currentLine.current = null;
+      savedLines.current = [];
+
+      setAttemptActive(false);
+      setTimeLeft(0);
+      setStatus("Time is up. Click and hold on the maze to try again.");
+    } else if (remainingSeconds <= 5) {
+      setStatus("Almost out of time! The ink is flashing red.");
+    }
   }
 
   function redrawCanvas() {
@@ -134,47 +208,45 @@ export default function FadingInkTool() {
     const box = canvas.getBoundingClientRect();
     const now = Date.now();
     const fadeMilliseconds = fadeTime * 1000;
+    const shouldWarn = attemptActive && timeLeft <= 5;
 
     ctx.clearRect(0, 0, box.width, box.height);
 
-    // Remove lines after they have fully faded.
     savedLines.current = savedLines.current.filter((line) => {
       return now - line.time < fadeMilliseconds;
     });
 
-    // Older lines get more transparent.
     savedLines.current.forEach((line) => {
       const age = now - line.time;
       const opacity = 1 - age / fadeMilliseconds;
 
-      drawLine(ctx, line.points, opacity);
+      drawLine(ctx, line.points, opacity, shouldWarn);
     });
 
-    // This draws the current line while the user is still moving the mouse.
     if (currentLine.current) {
-      drawLine(ctx, currentLine.current.points, 1);
+      drawLine(ctx, currentLine.current.points, 1, shouldWarn);
     }
   }
 
   function drawLine(
     ctx: CanvasRenderingContext2D,
     points: Point[],
-    opacity: number
+    opacity: number,
+    shouldWarn: boolean
   ) {
     if (points.length < 2) {
       return;
     }
 
-    ctx.save();
+    const flashOn = shouldWarn && Math.floor(Date.now() / 220) % 2 === 0;
+    const mainColor = flashOn ? "#b42318" : "#1f3a5f";
 
+    ctx.save();
     ctx.globalAlpha = opacity;
-    ctx.strokeStyle = "#2f7d7b";
-    ctx.lineWidth = 4;
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
-    ctx.shadowColor = "#2f7d7b";
-    ctx.shadowBlur = 8 * opacity;
 
+    // White under-stroke keeps the ink visible on different backgrounds.
     ctx.beginPath();
     ctx.moveTo(points[0].x, points[0].y);
 
@@ -182,7 +254,26 @@ export default function FadingInkTool() {
       ctx.lineTo(point.x, point.y);
     });
 
+    ctx.strokeStyle = "rgba(255,255,255,0.95)";
+    ctx.lineWidth = flashOn ? 11 : 9;
+    ctx.shadowColor = "rgba(255,255,255,0.65)";
+    ctx.shadowBlur = 5;
     ctx.stroke();
+
+    // Main accessible marker stroke.
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+
+    points.forEach((point) => {
+      ctx.lineTo(point.x, point.y);
+    });
+
+    ctx.strokeStyle = mainColor;
+    ctx.lineWidth = flashOn ? 6 : 5;
+    ctx.shadowColor = mainColor;
+    ctx.shadowBlur = flashOn ? 8 : 3;
+    ctx.stroke();
+
     ctx.restore();
   }
 
@@ -192,11 +283,10 @@ export default function FadingInkTool() {
     setInkOn(nextValue);
 
     if (nextValue) {
-      setStatus("Fading ink is on. Draw on the image.");
+      setStatus("Fading ink is on. Click and hold on the maze to start.");
+      setTimeLeft(fadeTime);
     } else {
-      isDrawing.current = false;
-      currentLine.current = null;
-      setStatus("Fading ink is off.");
+      resetAttempt("Fading ink is off.");
     }
   }
 
@@ -204,13 +294,48 @@ export default function FadingInkTool() {
     savedLines.current = [];
     currentLine.current = null;
     isDrawing.current = false;
-    setStatus("Ink cleared.");
+    attemptStartRef.current = null;
+
+    setAttemptActive(false);
+    setTimeLeft(fadeTime);
+    setStatus("Ink cleared. Click and hold on the maze to start again.");
+  }
+
+  function resetAttempt(nextStatus: string) {
+    savedLines.current = [];
+    currentLine.current = null;
+    isDrawing.current = false;
+    attemptStartRef.current = null;
+
+    setAttemptActive(false);
+    setTimeLeft(fadeTime);
+    setStatus(nextStatus);
+  }
+
+  function goToNextMaze() {
+    setMazeIndex((currentIndex) =>
+      currentIndex === mazeImages.length - 1 ? 0 : currentIndex + 1
+    );
+
+    resetAttempt("Moved to the next maze. Click and hold to start the timer.");
+  }
+
+  function formatTime(seconds: number) {
+    if (seconds >= 60) {
+      return "1 min";
+    }
+
+    return `${Math.ceil(seconds)}s`;
   }
 
   return (
     <article className="demo-tool-card card">
       <div className="demo-image-area demo-drawing-area">
-        <img src="/annotshare/scenario-1.jpg" alt="Fading ink tool scenario" />
+        <img
+          className="demo-maze-image"
+          src={currentMaze.src}
+          alt={`${currentMaze.name} fading ink maze`}
+        />
 
         <canvas
           ref={canvasRef}
@@ -224,24 +349,26 @@ export default function FadingInkTool() {
       </div>
 
       <div className="demo-tool-content">
-        <span className="badge badge-gold">Tool 1</span>
-
-        <h2>Fading Ink Tool</h2>
-
-        <p className="text-muted">
-          This first section introduces fading ink. Users can draw temporary
-          marks on the screen, and the ink fades after a few seconds.
-        </p>
-
-        <div className="demo-tool-task">
-          <strong>User study task:</strong>
-          <p>
-            Ask the user to draw or point out something on the screen using
-            fading ink.
-          </p>
+        <div className="demo-tool-header">
+          <span
+            className={
+              attemptActive && timeLeft <= 5
+                ? "badge demo-timer-badge warning"
+                : "badge demo-timer-badge"
+            }
+          >
+            Timer: {formatTime(timeLeft)}
+          </span>
         </div>
 
-        <div className="demo-button-row">
+        <h2>Amaze-ing disappearing ink tool</h2>
+
+        <p className="text-muted">
+          This tool lets users draw temporary ink while solving a maze. The ink
+          fades after the selected time, so users can test if fading ink helps
+          them move faster without leaving permanent marks on the screen.
+        </p>
+<div className="demo-button-row">
           <button
             className="demo-tool-button"
             type="button"
@@ -258,17 +385,33 @@ export default function FadingInkTool() {
             Clear Ink
           </button>
 
-          <label className="demo-slider-label">
-            Fade:
+          <button
+            className="demo-tool-button secondary"
+            type="button"
+            onClick={goToNextMaze}
+          >
+            Next Maze
+          </button>
+
+          <label className="demo-fade-control">
+            <span>Time:</span>
+
             <input
               type="range"
-              min="1"
-              max="10"
+              min="5"
+              max="60"
+              step="5"
               value={fadeTime}
               onChange={(event) => setFadeTime(Number(event.target.value))}
             />
-            <span>{fadeTime}s</span>
+
+            <span>{formatTime(fadeTime)}</span>
           </label>
+
+          <span className="demo-step-count">
+            {currentMaze.difficulty} · Maze {mazeIndex + 1} of{" "}
+            {mazeImages.length}
+          </span>
         </div>
 
         <p className="demo-tool-status">{status}</p>

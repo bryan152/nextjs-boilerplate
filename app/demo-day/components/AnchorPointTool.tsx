@@ -2,121 +2,156 @@
 
 import { useState } from "react";
 
-type Pin = {
+type AnchorPin = {
   id: number;
   x: number;
   y: number;
 };
 
+const anchorScenes = [
+  {
+    name: "Easy Farm Scene",
+    difficulty: "Easy",
+    src: "/annotshare/easyAnchor.png",
+    task: "Place an anchor on every green tractor you can find. Count them as you go.",
+  },
+  {
+    name: "Medium Summer Scene",
+    difficulty: "Medium",
+    src: "/annotshare/mediumAnchor.png",
+    task: "Place an anchor on every beach ball you can find. This one is trickier.",
+  },
+];
+
 export default function AnchorPointTool() {
-  const [anchorOn, setAnchorOn] = useState(false);
-  const [pins, setPins] = useState<Pin[]>([]);
-  const [status, setStatus] = useState("Anchor tool is off.");
+  const [anchorModeOn, setAnchorModeOn] = useState(false);
+  const [sceneIndex, setSceneIndex] = useState(0);
+  const [anchors, setAnchors] = useState<AnchorPin[]>([]);
+  const [status, setStatus] = useState("Anchor tool is off. Anchors placed: 0");
 
-  function toggleAnchor() {
-    const nextValue = !anchorOn;
+  const currentScene = anchorScenes[sceneIndex];
 
-    setAnchorOn(nextValue);
+  function toggleAnchorMode() {
+    const nextValue = !anchorModeOn;
+    setAnchorModeOn(nextValue);
 
     if (nextValue) {
-      setStatus("Anchor tool is on. Click the image to place a pin.");
+      setStatus(
+        `Anchor tool is on. Click the image to place anchors. Anchors placed: ${anchors.length}`
+      );
     } else {
-      setStatus("Anchor tool is off.");
+      setStatus(`Anchor tool is off. Anchors placed: ${anchors.length}`);
     }
   }
 
-  function addPin(event: React.PointerEvent<HTMLDivElement>) {
-    if (!anchorOn) {
+  function clearAnchors() {
+    setAnchors([]);
+    setStatus("Anchors cleared. Anchors placed: 0");
+  }
+
+  function goToNextScene() {
+    setSceneIndex((currentIndex) =>
+      currentIndex === anchorScenes.length - 1 ? 0 : currentIndex + 1
+    );
+
+    setAnchors([]);
+    setStatus("Scene changed. Anchors placed: 0");
+  }
+
+  function placeAnchor(event: React.MouseEvent<HTMLDivElement>) {
+    if (!anchorModeOn) {
       return;
     }
 
-    // This gets the image area location so the pin goes where I clicked,
-    // not just where it is on the whole browser window.
     const box = event.currentTarget.getBoundingClientRect();
 
-    const newPin = {
-      id: pins.length + 1,
-      x: event.clientX - box.left,
-      y: event.clientY - box.top,
-    };
+    const x = ((event.clientX - box.left) / box.width) * 100;
+    const y = ((event.clientY - box.top) / box.height) * 100;
 
-    setPins([...pins, newPin]);
-    setStatus(`Anchor ${newPin.id} placed.`);
-  }
+    setAnchors((previousAnchors) => {
+      const updatedAnchors = [
+        ...previousAnchors,
+        {
+          id: previousAnchors.length + 1,
+          x,
+          y,
+        },
+      ];
 
-  function clearPins() {
-    setPins([]);
-    setStatus("Anchors cleared.");
+      setStatus(`Anchor placed. Anchors placed: ${updatedAnchors.length}`);
+      return updatedAnchors;
+    });
   }
 
   return (
     <article className="demo-tool-card card">
       <div
         className={
-          anchorOn
+          anchorModeOn
             ? "demo-image-area demo-anchor-area anchor-active"
             : "demo-image-area demo-anchor-area"
         }
-        onPointerDown={addPin}
+        onClick={placeAnchor}
       >
         <img
-          src="/annotshare/scenario-2.gif"
-          alt="Shared anchor point scenario"
+          src={currentScene.src}
+          alt={`${currentScene.name} for shared anchor point practice`}
         />
 
-        {pins.map((pin) => (
+        {anchors.map((anchor) => (
           <div
+            key={anchor.id}
             className="demo-anchor-pin"
-            key={pin.id}
             style={{
-              left: pin.x,
-              top: pin.y,
+              left: `${anchor.x}%`,
+              top: `${anchor.y}%`,
             }}
           >
-            {pin.id}
+            {anchor.id}
           </div>
         ))}
       </div>
 
       <div className="demo-tool-content">
-        <span className="badge badge-gold">Tool 2</span>
 
         <h2>Shared Anchor Point</h2>
 
         <p className="text-muted">
-          This section introduces shared anchor points. Users can place numbered
-          pins on the screen so both people know what part is being discussed.
+          This tool lets users place numbered anchor points on the image so both
+          people know exactly what part is being tracked.
         </p>
-
-        <div className="demo-tool-task">
-          <strong>User study task:</strong>
-          <p>
-            Ask the user to place an anchor point where the helper should look
-            next.
-          </p>
-        </div>
-
-        <div className="demo-button-row">
+<div className="demo-button-row">
           <button
             className="demo-tool-button"
             type="button"
-            onClick={toggleAnchor}
+            onClick={toggleAnchorMode}
           >
-            {anchorOn ? "Turn Anchor Tool Off" : "Try Anchor Tool"}
+            {anchorModeOn ? "Turn Anchor Tool Off" : "Try Anchor Tool"}
           </button>
 
           <button
             className="demo-tool-button secondary"
             type="button"
-            onClick={clearPins}
+            onClick={clearAnchors}
           >
             Clear Anchors
           </button>
+
+          <button
+            className="demo-tool-button secondary"
+            type="button"
+            onClick={goToNextScene}
+          >
+            Next Scene
+          </button>
+
+          <span className="demo-step-count">
+            {currentScene.difficulty} · Scene {sceneIndex + 1} of{" "}
+            {anchorScenes.length}
+          </span>
         </div>
 
-        <p className="demo-tool-status">
-          {status} Anchors placed: {pins.length}
-        </p>
+        <p className="demo-tool-status">{status}</p>
       </div>
     </article>
   );
