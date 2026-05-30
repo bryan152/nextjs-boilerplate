@@ -2,71 +2,106 @@
 
 import { useState } from "react";
 
-export default function VoiceHighlightTool() {
-  const [highlightOn, setHighlightOn] = useState(false);
-  const [status, setStatus] = useState(
-    "Voice highlight is off. Click the button to simulate the voice command."
-  );
+type VoiceHighlightToolProps = {
+  imageSrc?: string;
+  imageAlt?: string;
+  title?: string;
+  buttonText?: string;
+  startingStatus?: string;
+  detectedText?: string;
+  firstBubbleText?: string;
+  showTitle?: boolean;
+  showBubbles?: boolean;
+  highlightClassName?: string;
+  highlightClassNames?: string[];
+  className?: string;
+};
 
-  function runVoiceHighlight() {
-    setHighlightOn(true);
-    setStatus('Voice command detected: "No, not that one, the eagle."');
-  }
+const defaultImage = {
+  src: "/annotshare/voiceAmazon.png",
+  alt: "Shopping page used for voice highlight demo",
+};
 
-  function clearHighlight() {
-    setHighlightOn(false);
-    setStatus("Highlight cleared.");
+export default function VoiceHighlightTool({
+  imageSrc = defaultImage.src,
+  imageAlt = defaultImage.alt,
+  title = "Voice Highlight",
+  buttonText = "Detect Voice Direction",
+  startingStatus = "Voice highlight is off.",
+  detectedText = "No, the eagle.",
+  firstBubbleText = "This one?",
+  showTitle = true,
+  showBubbles = true,
+  highlightClassName = "",
+  highlightClassNames,
+  className = "",
+}: VoiceHighlightToolProps) {
+  const [voiceOn, setVoiceOn] = useState(false);
+  const [status, setStatus] = useState(startingStatus);
+
+  // This lets panel 3 use one box, but panel 4 can use 2 or 3 boxes.
+  const highlightBoxes =
+    highlightClassNames && highlightClassNames.length > 0
+      ? highlightClassNames
+      : [highlightClassName];
+
+  function toggleVoice() {
+    const nextValue = !voiceOn;
+
+    setVoiceOn(nextValue);
+    setStatus(nextValue ? `Voice detected: "${detectedText}"` : startingStatus);
   }
 
   return (
-    <article className="demo-tool-card card">
-      <div className="demo-image-area demo-voice-area">
-        <img
-          src="/annotshare/voiceAmazon.png"
-          alt="Shopping page used for voice highlight demo"
-        />
+    <article className={`demo-tool-card card ${className}`}>
+      <div className="demo-tool-content demo-tool-content-top">
+        {showTitle && <h2>{title}</h2>}
 
-        <div className="demo-voice-command-bubble">
-          “No, not that one, the eagle.”
-        </div>
-
-        <div
-          className={
-            highlightOn
-              ? "demo-voice-highlight-box active"
-              : "demo-voice-highlight-box"
-          }
-        />
-      </div>
-
-      <div className="demo-tool-content">
-
-        <h2>Voice Highlight</h2>
-
-        <p className="text-muted">
-          This tool shows the idea of a voice-activated highlighter. Instead of
-          manually drawing or placing an anchor, the system listens for a spoken
-          cue and highlights the intended item automatically.
-        </p>
-<div className="demo-button-row">
+        <div className="demo-button-row">
           <button
-            className="demo-tool-button"
+            className={
+              voiceOn
+                ? "demo-tool-button tool-toggle-active"
+                : "demo-tool-button secondary tool-toggle-inactive"
+            }
             type="button"
-            onClick={runVoiceHighlight}
+            onClick={toggleVoice}
+            aria-pressed={voiceOn}
           >
-            Simulate Voice Highlight
-          </button>
-
-          <button
-            className="demo-tool-button secondary"
-            type="button"
-            onClick={clearHighlight}
-          >
-            Clear Highlight
+            {voiceOn ? "Voice Highlight On" : buttonText}
           </button>
         </div>
 
         <p className="demo-tool-status">{status}</p>
+      </div>
+
+      <div className="demo-image-area demo-voice-area">
+        <img src={imageSrc} alt={imageAlt} />
+
+        {showBubbles && (
+          <div className="demo-chat-bubble demo-chat-bubble-question">
+            <span className="demo-chat-label">Friend</span>
+            “{firstBubbleText}”
+          </div>
+        )}
+
+        {showBubbles && voiceOn && (
+          <div className="demo-chat-bubble demo-chat-bubble-detected">
+            <span className="demo-chat-label">Voice direction detected</span>
+            “{detectedText}”
+          </div>
+        )}
+
+        {highlightBoxes.map((boxClass) => (
+          <div
+            key={boxClass || "default-highlight"}
+            className={
+              voiceOn
+                ? `demo-voice-highlight-box ${boxClass} active`
+                : `demo-voice-highlight-box ${boxClass}`
+            }
+          />
+        ))}
       </div>
     </article>
   );

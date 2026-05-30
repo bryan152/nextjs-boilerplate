@@ -6,60 +6,69 @@ type AnchorPin = {
   id: number;
   x: number;
   y: number;
+  color: string;
 };
 
-const anchorScenes = [
+type AnchorPointToolProps = {
+  imageSrc?: string;
+  imageAlt?: string;
+  title?: string;
+  showTitle?: boolean;
+  className?: string;
+};
+
+const defaultImage = {
+  src: "/annotshare/easyAnchor.png",
+  alt: "Farm image for shared anchor point tool",
+};
+
+const pinColors = [
   {
-    name: "Easy Farm Scene",
-    difficulty: "Easy",
-    src: "/annotshare/easyAnchor.png",
-    task: "Place an anchor on every green tractor you can find. Count them as you go.",
+    name: "Red",
+    solid: "#b42318",
+    transparent: "rgba(180, 35, 24, 0.62)",
   },
   {
-    name: "Medium Summer Scene",
-    difficulty: "Medium",
-    src: "/annotshare/mediumAnchor.png",
-    task: "Place an anchor on every beach ball you can find. This one is trickier.",
+    name: "Green",
+    solid: "#207a3c",
+    transparent: "rgba(32, 122, 60, 0.62)",
+  },
+  {
+    name: "Blue",
+    solid: "#1f3a5f",
+    transparent: "rgba(31, 58, 95, 0.62)",
   },
 ];
 
-export default function AnchorPointTool() {
-  const [anchorModeOn, setAnchorModeOn] = useState(false);
-  const [sceneIndex, setSceneIndex] = useState(0);
+export default function AnchorPointTool({
+  imageSrc = defaultImage.src,
+  imageAlt = defaultImage.alt,
+  title = "Shared Anchor Point",
+  showTitle = true,
+  className = "",
+}: AnchorPointToolProps) {
+  const [anchorOn, setAnchorOn] = useState(false);
   const [anchors, setAnchors] = useState<AnchorPin[]>([]);
-  const [status, setStatus] = useState("Anchor tool is off. Anchors placed: 0");
+  const [colorIndex, setColorIndex] = useState(2);
+  const [status, setStatus] = useState("Anchor tool is off.");
 
-  const currentScene = anchorScenes[sceneIndex];
+  const currentColor = pinColors[colorIndex];
+  const count = anchors.length;
 
-  function toggleAnchorMode() {
-    const nextValue = !anchorModeOn;
-    setAnchorModeOn(nextValue);
+  function toggleAnchorTool() {
+    const nextValue = !anchorOn;
+
+    setAnchorOn(nextValue);
 
     if (nextValue) {
-      setStatus(
-        `Anchor tool is on. Click the image to place anchors. Anchors placed: ${anchors.length}`
-      );
+      setStatus("Anchor tool is on. Click the image to place anchors.");
     } else {
-      setStatus(`Anchor tool is off. Anchors placed: ${anchors.length}`);
+      setStatus("Anchor tool is off.");
     }
   }
 
-  function clearAnchors() {
-    setAnchors([]);
-    setStatus("Anchors cleared. Anchors placed: 0");
-  }
-
-  function goToNextScene() {
-    setSceneIndex((currentIndex) =>
-      currentIndex === anchorScenes.length - 1 ? 0 : currentIndex + 1
-    );
-
-    setAnchors([]);
-    setStatus("Scene changed. Anchors placed: 0");
-  }
-
   function placeAnchor(event: React.MouseEvent<HTMLDivElement>) {
-    if (!anchorModeOn) {
+    if (!anchorOn) {
       return;
     }
 
@@ -68,65 +77,83 @@ export default function AnchorPointTool() {
     const x = ((event.clientX - box.left) / box.width) * 100;
     const y = ((event.clientY - box.top) / box.height) * 100;
 
-    setAnchors((previousAnchors) => {
-      const updatedAnchors = [
-        ...previousAnchors,
+    setAnchors((oldAnchors) => {
+      const newAnchors = [
+        ...oldAnchors,
         {
-          id: previousAnchors.length + 1,
+          id: oldAnchors.length + 1,
           x,
           y,
+          color: currentColor.transparent,
         },
       ];
 
-      setStatus(`Anchor placed. Anchors placed: ${updatedAnchors.length}`);
-      return updatedAnchors;
+      setStatus(`Anchor placed. Count: ${newAnchors.length}.`);
+      return newAnchors;
     });
   }
 
-  return (
-    <article className="demo-tool-card card">
-      <div
-        className={
-          anchorModeOn
-            ? "demo-image-area demo-anchor-area anchor-active"
-            : "demo-image-area demo-anchor-area"
-        }
-        onClick={placeAnchor}
-      >
-        <img
-          src={currentScene.src}
-          alt={`${currentScene.name} for shared anchor point practice`}
-        />
+  function removeLastAnchor() {
+    setAnchors((oldAnchors) => {
+      if (oldAnchors.length === 0) {
+        setStatus("No anchors to remove.");
+        return oldAnchors;
+      }
 
-        {anchors.map((anchor) => (
-          <div
-            key={anchor.id}
-            className="demo-anchor-pin"
+      const newAnchors = oldAnchors.slice(0, -1);
+      setStatus(`Last anchor removed. Count: ${newAnchors.length}.`);
+      return newAnchors;
+    });
+  }
+
+  function clearAnchors() {
+    setAnchors([]);
+    setStatus("Anchors cleared.");
+  }
+
+  function updatePinColor(nextIndex: number) {
+    setColorIndex(nextIndex);
+    setStatus(`Anchor color changed to ${pinColors[nextIndex].name}.`);
+  }
+
+  return (
+    <article className={`demo-tool-card card ${className}`}>
+      <div className="demo-tool-content demo-tool-content-top">
+        <div className="demo-tool-header">
+          <span
+            className="badge demo-timer-badge"
             style={{
-              left: `${anchor.x}%`,
-              top: `${anchor.y}%`,
+              background: currentColor.solid,
+              borderColor: currentColor.solid,
             }}
           >
-            {anchor.id}
-          </div>
-        ))}
-      </div>
+            Count: {count}
+          </span>
+        </div>
 
-      <div className="demo-tool-content">
+        {showTitle && <h2>{title}</h2>}
 
-        <h2>Shared Anchor Point</h2>
-
-        <p className="text-muted">
-          This tool lets users place numbered anchor points on the image so both
-          people know exactly what part is being tracked.
-        </p>
-<div className="demo-button-row">
+        <div className="demo-button-row">
           <button
-            className="demo-tool-button"
+            className={
+              anchorOn
+                ? "demo-tool-button tool-toggle-active"
+                : "demo-tool-button secondary tool-toggle-inactive"
+            }
             type="button"
-            onClick={toggleAnchorMode}
+            onClick={toggleAnchorTool}
+            aria-pressed={anchorOn}
           >
-            {anchorModeOn ? "Turn Anchor Tool Off" : "Try Anchor Tool"}
+            {anchorOn ? "Anchor Tool On" : "Turn Anchor Tool On"}
+          </button>
+
+          <button
+            className="demo-tool-button secondary"
+            type="button"
+            onClick={removeLastAnchor}
+            aria-label="Remove last anchor"
+          >
+            − Remove Last
           </button>
 
           <button
@@ -137,21 +164,48 @@ export default function AnchorPointTool() {
             Clear Anchors
           </button>
 
-          <button
-            className="demo-tool-button secondary"
-            type="button"
-            onClick={goToNextScene}
-          >
-            Next Scene
-          </button>
+          <label className="demo-fade-control">
+            <span>Pin color:</span>
 
-          <span className="demo-step-count">
-            {currentScene.difficulty} · Scene {sceneIndex + 1} of{" "}
-            {anchorScenes.length}
-          </span>
+            <input
+              type="range"
+              min="0"
+              max={pinColors.length - 1}
+              step="1"
+              value={colorIndex}
+              onChange={(event) => updatePinColor(Number(event.target.value))}
+            />
+
+            <span>{currentColor.name}</span>
+          </label>
         </div>
 
         <p className="demo-tool-status">{status}</p>
+      </div>
+
+      <div
+        className={
+          anchorOn
+            ? "demo-image-area demo-anchor-area anchor-active"
+            : "demo-image-area demo-anchor-area"
+        }
+        onClick={placeAnchor}
+      >
+        <img src={imageSrc} alt={imageAlt} />
+
+        {anchors.map((anchor) => (
+          <div
+            key={anchor.id}
+            className="demo-anchor-pin"
+            style={{
+              left: `${anchor.x}%`,
+              top: `${anchor.y}%`,
+              background: anchor.color,
+            }}
+          >
+            {anchor.id}
+          </div>
+        ))}
       </div>
     </article>
   );

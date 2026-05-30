@@ -7,12 +7,12 @@ export default function DemoDay() {
   return (
     <main className="demo-day-page">
       <section className="demo-day-hero">
-        <span className="badge badge-teal">CSS 480 Prototype </span>
+        <span className="badge badge-teal">CSS 480 </span>
 
         <h1>AnnotShare Demo Day</h1>
 
         <p>
-          This page introduces each AnnotShare tool first, then gives users a
+          This page introduces each AnnotShare tools first, then gives users a
           combined scenario where they can decide when each tool would help.
         </p>
       </section>

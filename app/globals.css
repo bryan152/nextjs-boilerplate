@@ -2255,3 +2255,889 @@ select:focus-visible {
     font-size: 0.76rem;
   }
 }
+
+/* Tool 1 controls moved above maze */
+.demo-tool-content-top {
+  border-bottom: 1px solid var(--border);
+}
+
+.demo-tool-content-top .demo-tool-button {
+  margin-top: 0;
+}
+
+.demo-tool-content-top .demo-tool-status {
+  margin-bottom: 0;
+}
+
+/* Tool toggle states */
+.tool-toggle-inactive {
+  background: white;
+  color: var(--navy);
+  border-color: var(--navy);
+}
+
+.tool-toggle-inactive:hover {
+  background: var(--soft-blue);
+  color: var(--navy);
+  border-color: var(--navy);
+}
+
+.tool-toggle-active {
+  background: var(--navy);
+  color: white;
+  border-color: var(--navy);
+}
+
+.tool-toggle-active:hover {
+  background: var(--teal);
+  border-color: var(--teal);
+}
+
+/* Calm timer state when ink is almost faded */
+.demo-timer-badge.gentle-warning {
+  background: var(--soft-gold);
+  color: #6f4700;
+  border-color: #f2dfac;
+  animation: none;
+  transform: none;
+}
+
+/* =========================================================
+   Tool 1 side layout inside maze panel
+   ========================================================= */
+
+.demo-drawing-area.demo-drawing-layout {
+  display: grid;
+  grid-template-columns: minmax(170px, 220px) minmax(320px, 470px) minmax(190px, 250px);
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  min-height: 620px;
+  padding: 1.5rem;
+}
+
+.demo-maze-side-panel {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(207, 216, 235, 0.95);
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 10px 22px rgba(20, 30, 60, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.demo-maze-side-panel-left {
+  align-items: flex-start;
+}
+
+.demo-maze-side-panel-right {
+  align-items: stretch;
+}
+
+.demo-side-title {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--navy);
+}
+
+.demo-side-status {
+  margin: 0;
+  color: var(--navy);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.demo-maze-center-stage {
+  position: relative;
+  width: 100%;
+  max-width: 470px;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+}
+
+.demo-maze-center-image,
+.demo-maze-ink-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.demo-maze-center-image {
+  object-fit: contain;
+  display: block;
+}
+
+.demo-maze-ink-canvas {
+  pointer-events: none;
+}
+
+.demo-maze-ink-canvas.active {
+  pointer-events: auto;
+  cursor: crosshair;
+}
+
+.demo-fade-control-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+
+.demo-fade-control-stack input {
+  width: 100%;
+}
+
+/* Tool toggle states */
+.tool-toggle-inactive {
+  background: white;
+  color: var(--navy);
+  border-color: var(--navy);
+}
+
+.tool-toggle-inactive:hover {
+  background: var(--soft-blue);
+  color: var(--navy);
+  border-color: var(--navy);
+}
+
+.tool-toggle-active {
+  background: var(--navy);
+  color: white;
+  border-color: var(--navy);
+}
+
+.tool-toggle-active:hover {
+  background: var(--teal);
+  border-color: var(--teal);
+}
+
+/* Calm timer state */
+.demo-timer-badge.gentle-warning {
+  background: var(--soft-gold);
+  color: #6f4700;
+  border-color: #f2dfac;
+  animation: none;
+  transform: none;
+}
+
+@media (max-width: 1000px) {
+  .demo-drawing-area.demo-drawing-layout {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    min-height: auto;
+  }
+
+  .demo-maze-center-stage {
+    order: 2;
+    max-width: 430px;
+  }
+
+  .demo-maze-side-panel-left {
+    order: 1;
+  }
+
+  .demo-maze-side-panel-right {
+    order: 3;
+  }
+}
+
+/* =========================================================
+   Reusable fading ink tool states
+   ========================================================= */
+
+.demo-tool-content-top {
+  border-bottom: 1px solid var(--border);
+}
+
+.demo-tool-content-top .demo-tool-button {
+  margin-top: 0;
+}
+
+.demo-tool-content-top .demo-tool-status {
+  margin-bottom: 0;
+}
+
+.tool-toggle-inactive {
+  background: white;
+  color: var(--navy);
+  border-color: var(--navy);
+}
+
+.tool-toggle-inactive:hover {
+  background: var(--soft-blue);
+  color: var(--navy);
+  border-color: var(--navy);
+}
+
+.tool-toggle-active {
+  background: var(--navy);
+  color: white;
+  border-color: var(--navy);
+}
+
+.tool-toggle-active:hover {
+  background: var(--teal);
+  border-color: var(--teal);
+}
+
+.demo-timer-badge.gentle-warning {
+  background: var(--soft-gold);
+  color: #6f4700;
+  border-color: #f2dfac;
+  animation: none;
+  transform: none;
+}
+
+/* =========================================================
+   Combined panel uses the same tools without duplicate code
+   ========================================================= */
+
+.demo-combined-tool-instance {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.demo-combined-tool-instance:hover {
+  box-shadow: none;
+}
+
+.demo-combined-tool-instance .demo-tool-content-top {
+  border-top: 1px solid var(--border);
+}
+
+/* =========================================================
+   Tool 3 voice conversation bubbles
+   ========================================================= */
+
+.demo-chat-bubble {
+  position: absolute;
+  z-index: 7;
+  max-width: 300px;
+  padding: 0.85rem 1rem;
+  border-radius: 1rem;
+  font-weight: 800;
+  line-height: 1.35;
+  box-shadow: 0 8px 20px rgba(20, 30, 60, 0.28);
+}
+
+.demo-chat-label {
+  display: block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+  margin-bottom: 0.25rem;
+}
+
+.demo-chat-bubble-question {
+  top: 1rem;
+  left: 1rem;
+  background: white;
+  color: var(--navy);
+  border: 2px solid var(--navy);
+}
+
+.demo-chat-bubble-question::after {
+  content: "";
+  position: absolute;
+  left: 1.4rem;
+  bottom: -0.65rem;
+  width: 1rem;
+  height: 1rem;
+  background: white;
+  border-right: 2px solid var(--navy);
+  border-bottom: 2px solid var(--navy);
+  transform: rotate(45deg);
+}
+
+.demo-chat-bubble-detected {
+  top: 6.5rem;
+  left: 1rem;
+  background: var(--navy);
+  color: white;
+}
+
+.demo-chat-bubble-detected::after {
+  content: "";
+  position: absolute;
+  left: 1.4rem;
+  bottom: -0.65rem;
+  width: 1rem;
+  height: 1rem;
+  background: var(--navy);
+  transform: rotate(45deg);
+}
+
+@media (max-width: 700px) {
+  .demo-chat-bubble {
+    max-width: calc(100% - 2rem);
+    font-size: 0.88rem;
+    padding: 0.7rem 0.85rem;
+  }
+
+  .demo-chat-bubble-question {
+    top: 0.8rem;
+    left: 0.8rem;
+  }
+
+  .demo-chat-bubble-detected {
+    top: 5.8rem;
+    left: 0.8rem;
+  }
+}
+/* =========================================================
+   Combined panel stable shared tool layout
+   ========================================================= */
+
+.demo-combined-card .demo-combined-header {
+  border-bottom: 1px solid var(--border);
+}
+
+.demo-combined-card .demo-combined-header h2 {
+  margin-top: 0;
+}
+
+.demo-combined-tool-shell {
+  width: 100%;
+}
+
+/* Remove nested card look when the tools are reused inside panel 4 */
+.demo-combined-tool-instance {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.demo-combined-tool-instance:hover {
+  box-shadow: none;
+}
+
+/* Keep the reused tool controls the same height so the image does not jump */
+.demo-combined-tool-instance .demo-tool-content-top {
+  min-height: 150px;
+  border-top: 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Make all reused tool image areas the same size in panel 4 */
+.demo-combined-tool-instance .demo-drawing-area,
+.demo-combined-tool-instance .demo-anchor-area,
+.demo-combined-tool-instance .demo-voice-area {
+  position: relative;
+  min-height: 560px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #4a5788 0%, #72929f 100%);
+  overflow: hidden;
+}
+
+/* Force the actual scenario image to stay the same size across tools */
+.demo-combined-tool-instance .demo-drawing-area img,
+.demo-combined-tool-instance .demo-anchor-area img,
+.demo-combined-tool-instance .demo-voice-area img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 880px;
+  height: auto;
+  max-height: 520px;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 24px rgba(20, 30, 60, 0.18);
+}
+
+/* Keep fading ink canvas aligned over the stable image area */
+.demo-combined-tool-instance .demo-ink-canvas {
+  position: absolute;
+  inset: 1.5rem;
+  z-index: 2;
+  width: calc(100% - 3rem);
+  height: calc(100% - 3rem);
+}
+
+/* Keep voice bubbles from changing the layout */
+.demo-combined-tool-instance .demo-chat-bubble {
+  position: absolute;
+}
+
+@media (max-width: 700px) {
+  .demo-combined-tool-instance .demo-tool-content-top {
+    min-height: 180px;
+  }
+
+  .demo-combined-tool-instance .demo-drawing-area,
+  .demo-combined-tool-instance .demo-anchor-area,
+  .demo-combined-tool-instance .demo-voice-area {
+    min-height: 420px;
+    padding: 1rem;
+  }
+
+  .demo-combined-tool-instance .demo-drawing-area img,
+  .demo-combined-tool-instance .demo-anchor-area img,
+  .demo-combined-tool-instance .demo-voice-area img {
+    max-height: 360px;
+  }
+
+  .demo-combined-tool-instance .demo-ink-canvas {
+    inset: 1rem;
+    width: calc(100% - 2rem);
+    height: calc(100% - 2rem);
+  }
+}
+
+/* =========================================================
+   Combined panel stable layout override
+   ========================================================= */
+
+.demo-combined-card .demo-combined-header {
+  border-bottom: 1px solid var(--border);
+}
+
+.demo-combined-card .demo-combined-header h2 {
+  margin-top: 0;
+}
+
+.demo-combined-tool-shell {
+  width: 100%;
+}
+
+/* Remove nested card look */
+.demo-combined-tool-instance {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.demo-combined-tool-instance:hover {
+  box-shadow: none;
+}
+
+/* Same control area height for each tool */
+.demo-combined-tool-instance .demo-tool-content-top {
+  min-height: 160px;
+  border-top: 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Same image area for ink, anchor, and voice */
+.demo-combined-tool-instance .demo-drawing-area,
+.demo-combined-tool-instance .demo-anchor-area,
+.demo-combined-tool-instance .demo-voice-area {
+  position: relative;
+  min-height: 600px;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #4a5788 0%, #72929f 100%);
+  overflow: hidden;
+}
+
+/* Same image sizing across all three tools */
+.demo-combined-tool-instance .demo-drawing-area img,
+.demo-combined-tool-instance .demo-anchor-area img,
+.demo-combined-tool-instance .demo-voice-area img {
+  position: relative;
+  z-index: 1;
+  width: 880px;
+  max-width: 100%;
+  height: 520px;
+  max-height: 520px;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 24px rgba(20, 30, 60, 0.18);
+}
+
+/* Keep fading ink canvas over the same stable image area */
+.demo-combined-tool-instance .demo-ink-canvas {
+  position: absolute;
+  inset: 1.5rem;
+  z-index: 2;
+  width: calc(100% - 3rem);
+  height: calc(100% - 3rem);
+}
+
+/* Do not show chat bubbles inside the combined panel */
+.demo-combined-tool-instance .demo-chat-bubble {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .demo-combined-tool-instance .demo-tool-content-top {
+    min-height: 190px;
+  }
+
+  .demo-combined-tool-instance .demo-drawing-area,
+  .demo-combined-tool-instance .demo-anchor-area,
+  .demo-combined-tool-instance .demo-voice-area {
+    min-height: 430px;
+    height: 430px;
+    padding: 1rem;
+  }
+
+  .demo-combined-tool-instance .demo-drawing-area img,
+  .demo-combined-tool-instance .demo-anchor-area img,
+  .demo-combined-tool-instance .demo-voice-area img {
+    width: 100%;
+    height: 360px;
+    max-height: 360px;
+  }
+
+  .demo-combined-tool-instance .demo-ink-canvas {
+    inset: 1rem;
+    width: calc(100% - 2rem);
+    height: calc(100% - 2rem);
+  }
+}
+/* =========================================================
+   Combined panel true shared workspace
+   ========================================================= */
+
+.demo-combined-card .demo-combined-header {
+  border-bottom: 1px solid var(--border);
+}
+
+.demo-combined-card .demo-combined-header h2 {
+  margin-top: 0;
+}
+
+.demo-combined-controls {
+  min-height: 165px;
+  border-bottom: 1px solid var(--border);
+}
+
+.demo-combined-stage {
+  position: relative;
+  min-height: 600px;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: linear-gradient(135deg, #4a5788 0%, #72929f 100%);
+  overflow: hidden;
+  touch-action: none;
+}
+
+.demo-combined-stage.anchor-active {
+  cursor: crosshair;
+}
+
+.demo-combined-stage img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.demo-combined-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.demo-combined-canvas.active {
+  pointer-events: auto;
+  cursor: crosshair;
+}
+
+.demo-combined-stage .demo-anchor-pin {
+  z-index: 5;
+}
+
+.demo-combined-voice-highlight {
+  position: absolute;
+  z-index: 4;
+  display: none;
+  left: 45%;
+  top: 42%;
+  width: 18%;
+  height: 18%;
+  border: 5px solid #ffde59;
+  border-radius: 1rem;
+  background: rgba(255, 222, 89, 0.12);
+  box-shadow:
+    0 0 0 4px rgba(255, 255, 255, 0.95),
+    0 0 24px rgba(255, 222, 89, 0.95);
+  pointer-events: none;
+}
+
+.demo-combined-voice-highlight.active {
+  display: block;
+  animation: demo-voice-pulse 0.9s infinite alternate;
+}
+
+@media (max-width: 700px) {
+  .demo-combined-controls {
+    min-height: 190px;
+  }
+
+  .demo-combined-stage {
+    min-height: 430px;
+    height: 430px;
+  }
+}
+/* =========================================================
+   Combined panel simple shared tool layout
+   ========================================================= */
+
+.demo-combined-card .demo-combined-header {
+  border-bottom: 1px solid var(--border);
+}
+
+.demo-combined-card .demo-combined-header h2 {
+  margin-top: 0;
+}
+
+.demo-combined-tool-area {
+  width: 100%;
+}
+
+/* Make the reused tools not look like cards inside a card */
+.demo-combined-tool-instance {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.demo-combined-tool-instance:hover {
+  box-shadow: none;
+}
+
+/* Keep each tool's control area about the same height */
+.demo-combined-tool-instance .demo-tool-content-top {
+  min-height: 165px;
+  border-top: 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Make every tool use the same stage size */
+.demo-combined-tool-instance .demo-drawing-area,
+.demo-combined-tool-instance .demo-anchor-area,
+.demo-combined-tool-instance .demo-voice-area {
+  position: relative;
+  height: 600px;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: linear-gradient(135deg, #4a5788 0%, #72929f 100%);
+  overflow: hidden;
+}
+
+/* Make the image sit right against the colored background */
+.demo-combined-tool-instance .demo-drawing-area img,
+.demo-combined-tool-instance .demo-anchor-area img,
+.demo-combined-tool-instance .demo-voice-area img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Keep the fading ink canvas covering the same stage */
+.demo-combined-tool-instance .demo-ink-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+}
+
+/* No chat bubbles in the combined panel */
+.demo-combined-tool-instance .demo-chat-bubble {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .demo-combined-tool-instance .demo-tool-content-top {
+    min-height: 190px;
+  }
+
+  .demo-combined-tool-instance .demo-drawing-area,
+  .demo-combined-tool-instance .demo-anchor-area,
+  .demo-combined-tool-instance .demo-voice-area {
+    height: 430px;
+    min-height: 430px;
+  }
+}
+/* Final override: Panel 4 report voice row */
+.demo-combined-tool-instance .demo-voice-highlight-box.panel4-highlight-report-row {
+  left: 49.5% !important;
+  top: 80% !important;  
+  width: 34% !important;
+  height: 7% !important;
+}
+
+/* =========================================================
+   Final Panel 4 combined tool fixes
+   ========================================================= */
+
+.demo-combined-card .demo-combined-header {
+  border-bottom: 1px solid var(--border);
+}
+
+.demo-combined-card .demo-combined-header h2 {
+  margin-top: 0;
+}
+
+.demo-combined-tool-area {
+  width: 100%;
+}
+
+.demo-combined-tool-instance {
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.demo-combined-tool-instance:hover {
+  box-shadow: none !important;
+}
+
+.demo-combined-tool-instance .demo-tool-content-top {
+  min-height: 165px;
+  border-top: 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.demo-combined-tool-instance .demo-drawing-area,
+.demo-combined-tool-instance .demo-anchor-area,
+.demo-combined-tool-instance .demo-voice-area {
+  position: relative;
+  height: 600px;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
+  background: linear-gradient(135deg, #4a5788 0%, #72929f 100%);
+  overflow: hidden;
+}
+
+.demo-combined-tool-instance .demo-drawing-area img,
+.demo-combined-tool-instance .demo-anchor-area img,
+.demo-combined-tool-instance .demo-voice-area img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.demo-combined-tool-instance .demo-ink-canvas {
+  position: absolute;
+  inset: 0 !important;
+  z-index: 2;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* No friend/chat bubbles in panel 4 */
+.demo-combined-tool-instance .demo-chat-bubble {
+  display: none !important;
+}
+
+/* Panel 4 image 1: report row */
+.demo-combined-tool-instance .demo-voice-highlight-box.panel4-highlight-report-row {
+  left: 49.5% !important;
+  top: 79.5% !important;
+  width: 34% !important;
+  height: 7% !important;
+}
+
+/* Panel 4 image 2: rectangle guesses on the left toolbar */
+.demo-combined-tool-instance .demo-voice-highlight-box.panel4-shape-box-1,
+.demo-combined-tool-instance .demo-voice-highlight-box.panel4-shape-box-2,
+.demo-combined-tool-instance .demo-voice-highlight-box.panel4-shape-box-3 {
+  border: 4px solid #ffde59;
+  border-radius: 0.45rem;
+  background: rgba(255, 222, 89, 0.12);
+  box-shadow:
+    0 0 0 3px rgba(255, 255, 255, 0.9),
+    0 0 16px rgba(255, 222, 89, 0.55);
+}
+
+/* These are purposely guesses, so it feels like an MVP and not perfect AI */
+.demo-combined-tool-instance .demo-voice-highlight-box.panel4-shape-box-1 {
+  left: 4.9% !important;
+  top: 47.5% !important;
+  width: 4.1% !important;
+  height: 4.3% !important;
+}
+
+.demo-combined-tool-instance .demo-voice-highlight-box.panel4-shape-box-2 {
+  left: 9.1% !important;
+  top: 47.5% !important;
+  width: 4.1% !important;
+  height: 4.3% !important;
+}
+
+.demo-combined-tool-instance .demo-voice-highlight-box.panel4-shape-box-3 {
+  left: 4.9% !important;
+  top: 53.8% !important;
+  width: 4.1% !important;
+  height: 5.1% !important;
+}
+
+@media (max-width: 700px) {
+  .demo-combined-tool-instance .demo-tool-content-top {
+    min-height: 190px;
+  }
+
+  .demo-combined-tool-instance .demo-drawing-area,
+  .demo-combined-tool-instance .demo-anchor-area,
+  .demo-combined-tool-instance .demo-voice-area {
+    height: 430px;
+    min-height: 430px;
+  }
+}
